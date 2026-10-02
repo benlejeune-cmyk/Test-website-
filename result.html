@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Onze date</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="app">
+
+    <section id="resultaat">
+        <div class="card">
+
+            <h1>Jippie! 🥰</h1>
+
+            <p>
+                Dit zijn de keuzes die je hebt gemaakt:
+            </p>
+
+            <div id="datumUur"></div>
+
+            <h2>Wat gaan we doen?</h2>
+
+            <div id="activiteiten"></div>
+
+            <div id="eigenIdeeContainer"></div>
+
+            <button
+                class="back"
+                onclick="window.location.href='keuze.html'">
+                Terug
+            </button><br>
+
+            <br> <p> Maak een screenshot hiervan en stuur het naar Ben :)</p>
+
+        </div>
+    </section>
+
+</div>
+
+<script>
+
+const gekozenDatum = localStorage.getItem("gekozenDatum");
+const gekozenUur = localStorage.getItem("gekozenUur");
+
+const gekozenActiviteiten =
+    JSON.parse(localStorage.getItem("gekozenActiviteiten")) || [];
+
+const eigenIdee =
+    localStorage.getItem("eigenIdee") || "";
+
+
+// Datum en uur tonen
+const datumUur = document.getElementById("datumUur");
+
+if (gekozenDatum && gekozenUur) {
+
+    const datum = new Date(`${gekozenDatum}T00:00:00`);
+
+    const leesbareDatum = datum.toLocaleDateString("nl-BE", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    datumUur.innerHTML = `
+        <p>
+            <strong>Datum:</strong> ${leesbareDatum}<br>
+            <strong>Uur:</strong> ${gekozenUur}
+        </p>
+    `;
+}
+
+
+// Activiteiten tonen
+const activiteiten = document.getElementById("activiteiten");
+
+if (gekozenActiviteiten.length > 0) {
+
+    gekozenActiviteiten.forEach(function(activiteit) {
+
+        const item = document.createElement("p");
+
+        item.textContent = "♡ " + activiteit;
+
+        activiteiten.appendChild(item);
+
+    });
+
+} else {
+
+    activiteiten.innerHTML = `
+        <p>Je hebt geen activiteiten gekozen.</p>
+    `;
+}
+
+
+// Eigen idee tonen
+const eigenIdeeContainer =
+    document.getElementById("eigenIdeeContainer");
+
+if (eigenIdee.trim() !== "") {
+
+    eigenIdeeContainer.innerHTML = `
+        <h2>Eigen idee</h2>
+        <p>${eigenIdee}</p>
+    `;
+
+}
+
+</script>
+
+</body>
+</html>
